@@ -55,52 +55,81 @@ console.log(whoTheLightest(bikeList));
 // Infine, creiamo un nuovo array i cui elementi contengono solo nomi e falli subiti e stampiamo tutto in console.
 
 const teamList = [
-  { name: "Juventus", foulsConceded: 0, points: 0 },
-  { name: "Inter", foulsConceded: 0, points: 0 },
-  { name: "Milan", foulsConceded: 0, points: 0 },
-  { name: "Roma", foulsConceded: 0, points: 0 },
-  { name: "Napoli", foulsConceded: 0, points: 0 },
-  { name: "Lazio", foulsConceded: 0, points: 0 },
-  { name: "Atalanta", foulsConceded: 0, points: 0 },
-  { name: "Fiorentina", foulsConceded: 0, points: 0 },
-  { name: "Parma", foulsConceded: 0, points: 0 },
-  { name: "Torino", foulsConceded: 0, points: 0 },
-  { name: "Bologna", foulsConceded: 0, points: 0 },
-  { name: "Venezia", foulsConceded: 0, points: 0 },
-  { name: "Empoli", foulsConceded: 0, points: 0 },
-  { name: "Udinese", foulsConceded: 0, points: 0 },
-  { name: "Monza", foulsConceded: 0, points: 0 },
-  { name: "Como", foulsConceded: 0, points: 0 },
-  { name: "Lecce", foulsConceded: 0, points: 0 },
-  { name: "Verona", foulsConceded: 0, points: 0 },
-  { name: "Genoa", foulsConceded: 0, points: 0 },
-  { name: "Cagliari", foulsConceded: 0, points: 0 }
+  { name: "Juventus", power: 10, foulsConceded: 0, points: 0 },
+  { name: "Inter", power: 10, foulsConceded: 0, points: 0 },
+  { name: "Milan", power: 9, foulsConceded: 0, points: 0 },
+  { name: "Roma", power: 7, foulsConceded: 0, points: 0 },
+  { name: "Napoli", power: 9, foulsConceded: 0, points: 0 },
+  { name: "Lazio", power: 7, foulsConceded: 0, points: 0 },
+  { name: "Atalanta", power: 8, foulsConceded: 0, points: 0 },
+  { name: "Fiorentina", power: 6, foulsConceded: 0, points: 0 },
+  { name: "Parma", power: 4, foulsConceded: 0, points: 0 },
+  { name: "Torino", power: 5, foulsConceded: 0, points: 0 },
+  { name: "Bologna", power: 6, foulsConceded: 0, points: 0 },
+  { name: "Venezia", power: 2, foulsConceded: 0, points: 0 },
+  { name: "Empoli", power: 2, foulsConceded: 0, points: 0 },
+  { name: "Udinese", power: 5, foulsConceded: 0, points: 0 },
+  { name: "Monza", power: 3, foulsConceded: 0, points: 0 },
+  { name: "Como", power: 4, foulsConceded: 0, points: 0 },
+  { name: "Lecce", power: 1, foulsConceded: 0, points: 0 },
+  { name: "Verona", power: 1, foulsConceded: 0, points: 0 },
+  { name: "Genoa", power: 3, foulsConceded: 0, points: 0 },
+  { name: "Cagliari", power: 1, foulsConceded: 0, points: 0 }
 ];
 
 const serieALeague = function(array){
     for (i = 0; i < array.length; i++){
         const currentTeam = array[i];
-        let counter = 0;
         for (ii = 0; ii < array.length; ii++){
-            if (counter !== array[i]) {
-                const randomNumResult = Math.floor(Math.random() * 4) + 1;
-                const firstRandomNumFouls = Math.floor(Math.random() * 10) + 1;
-                const secondRandomNumFouls = Math.floor(Math.random() * 10) + 1;
-                currentTeam.foulsConceded += firstRandomNumFouls;
-                array[i].foulsConceded += secondRandomNumFouls;
-                if (randomNumResult < 3) {
-                    currentTeam.points += 3;
-                } else if (randomNumResult === 3){
-                    currentTeam.points += 1;
-                    array[i].points += 1;
+            if (ii !== i) {
+                if (currentTeam.power > array[ii].power){
+                    const randomNumResult = Math.floor(Math.random() * 4) + 1;
+                    const firstRandomNumFouls = Math.floor(Math.random() * 10) + 1;
+                    const secondRandomNumFouls = Math.floor(Math.random() * 10) + 1;
+                    currentTeam.foulsConceded += firstRandomNumFouls;
+                    array[ii].foulsConceded += secondRandomNumFouls;
+                    if (randomNumResult < 3) {
+                        currentTeam.points += 3;
+                    } else if (randomNumResult === 3){
+                        currentTeam.points += 1;
+                        array[ii].points += 1;
+                    } else{
+                        array[ii].points += 3;
+                    };
+                } else if (currentTeam.power < array[ii].power){
+                    const randomNumResult = Math.floor(Math.random() * 4) + 1;
+                    const firstRandomNumFouls = Math.floor(Math.random() * 10) + 1;
+                    const secondRandomNumFouls = Math.floor(Math.random() * 10) + 1;
+                    currentTeam.foulsConceded += firstRandomNumFouls;
+                    array[ii].foulsConceded += secondRandomNumFouls;
+                    if (randomNumResult < 3) {
+                        array[ii].points += 3;
+                    } else if (randomNumResult === 3){
+                        currentTeam.points += 1;
+                        array[ii].points += 1;
+                    } else{
+                        currentTeam.points += 3;
+                    };
                 } else{
-                    array[i].points += 3;
+                    const randomNumResult = Math.floor(Math.random() * 3) + 1;
+                    const firstRandomNumFouls = Math.floor(Math.random() * 10) + 1;
+                    const secondRandomNumFouls = Math.floor(Math.random() * 10) + 1;
+                    currentTeam.foulsConceded += firstRandomNumFouls;
+                    array[ii].foulsConceded += secondRandomNumFouls;
+                    if (randomNumResult === 1) {
+                        array[ii].points += 3;
+                    } else if (randomNumResult === 2){
+                        currentTeam.points += 1;
+                        array[ii].points += 1;
+                    } else{
+                        currentTeam.points += 3;
+                    };
                 };
             };
-            counter += 1;
         };
     };
 };
 
 serieALeague(teamList);
+
 console.log(teamList);
