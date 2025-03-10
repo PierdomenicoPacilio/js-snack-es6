@@ -44,7 +44,7 @@ const whoTheLightest = function(array) {
 };
 
 console.log(whoTheLightest(bikeList));
-
+document.getElementById('bike').innerText = `${whoTheLightest(bikeList)}`
 
 // Snack2
 
@@ -77,12 +77,12 @@ const teamList = [
   { name: "Cagliari", power: 1, foulsConceded: 0, points: 0 }
 ];
 
-const serieALeague = function(array){
-    for (i = 0; i < array.length; i++){
+const serieALeague = function(array) {
+    for (i = 0; i < array.length; i++) {
         const currentTeam = array[i];
-        for (ii = 0; ii < array.length; ii++){
+        for (ii = 0; ii < array.length; ii++) {
             if (ii !== i) {
-                if (currentTeam.power > array[ii].power){
+                if (currentTeam.power > array[ii].power) {
                     const randomNumResult = Math.floor(Math.random() * 4) + 1;
                     const firstRandomNumFouls = Math.floor(Math.random() * 10) + 1;
                     const secondRandomNumFouls = Math.floor(Math.random() * 10) + 1;
@@ -90,13 +90,13 @@ const serieALeague = function(array){
                     array[ii].foulsConceded += secondRandomNumFouls;
                     if (randomNumResult < 3) {
                         currentTeam.points += 3;
-                    } else if (randomNumResult === 3){
+                    } else if (randomNumResult === 3) {
                         currentTeam.points += 1;
                         array[ii].points += 1;
-                    } else{
+                    } else {
                         array[ii].points += 3;
                     };
-                } else if (currentTeam.power < array[ii].power){
+                } else if (currentTeam.power < array[ii].power) {
                     const randomNumResult = Math.floor(Math.random() * 4) + 1;
                     const firstRandomNumFouls = Math.floor(Math.random() * 10) + 1;
                     const secondRandomNumFouls = Math.floor(Math.random() * 10) + 1;
@@ -104,13 +104,13 @@ const serieALeague = function(array){
                     array[ii].foulsConceded += secondRandomNumFouls;
                     if (randomNumResult < 3) {
                         array[ii].points += 3;
-                    } else if (randomNumResult === 3){
+                    } else if (randomNumResult === 3) {
                         currentTeam.points += 1;
                         array[ii].points += 1;
-                    } else{
+                    } else {
                         currentTeam.points += 3;
                     };
-                } else{
+                } else {
                     const randomNumResult = Math.floor(Math.random() * 3) + 1;
                     const firstRandomNumFouls = Math.floor(Math.random() * 10) + 1;
                     const secondRandomNumFouls = Math.floor(Math.random() * 10) + 1;
@@ -118,18 +118,35 @@ const serieALeague = function(array){
                     array[ii].foulsConceded += secondRandomNumFouls;
                     if (randomNumResult === 1) {
                         array[ii].points += 3;
-                    } else if (randomNumResult === 2){
+                    } else if (randomNumResult === 2) {
                         currentTeam.points += 1;
                         array[ii].points += 1;
-                    } else{
+                    } else {
                         currentTeam.points += 3;
                     };
                 };
             };
         };
     };
+    array.sort((a, b) => b.points - a.points);
 };
 
-serieALeague(teamList);
-
-console.log(teamList);
+document.getElementById('rankingBtn').addEventListener('click', function(){
+    document.getElementById('rankingBtn').classList.add('d-none');
+    document.getElementById('ranking').classList.remove('d-none');
+    serieALeague(teamList);
+    console.log(teamList)
+    for (i = 0; i < teamList.length; i++) {
+        document.getElementById('ranking').innerHTML +=`<div class="row col-12 p-0">
+                                                        <div class="col-8 bg-primary-subtle text-primary-emphasis">
+                                                            ${teamList[i].name}
+                                                        </div>
+                                                        <div class="col-2 bg-warning-subtle text-warning-emphasis">
+                                                            ${teamList[i].foulsConceded}
+                                                        </div>
+                                                        <div class="col-2 bg-success-subtle text-success-emphasis">
+                                                            ${teamList[i].points}
+                                                        </div>
+                                                     </div>`;
+    };
+});
